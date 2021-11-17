@@ -22,6 +22,7 @@ colnames(ahrqCodebook2015)
 colnames(sdi)
 colnames(outcomes)
 
+toupper(colnames(ahrqCodebook2015))
 intersect(colnames(census2015), colnames(ahrqCodebook2015))
 intersect(colnames(census2015), colnames(sdi))
 intersect(colnames(census2015), colnames(outcomes))
@@ -40,5 +41,13 @@ dat0 <- merge(df, sdi, by.x = "ZCTA", by.y = "zcta", all.x = TRUE)
 dat0$sample <- sample(c("train", "test"), nrow(dat0), rep=T, prob = c(1/2, 1/2)) 
 dtrain <- subset(dat0, sample == "train")
 dtest <- subset(dat0, sample=="test")
+```
+
+```{r}
+# Stepwise Regression Essentials in R
+library(tidyverse)
+library(caret)
+# install.packages("leaps")
+library(leaps)
 ```
 
