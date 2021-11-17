@@ -1,0 +1,45 @@
+---
+title: "Geographic and Social Predictors of Readmission."
+author: "Author One 1, …, …, …, Pseudonym Elemental PhD, MD 1,✉"
+date: "11/17/2021"
+output: html_document
+---
+
+# 1. Download the data set programatically
+```{r}
+library(openxlsx);
+census2015 <- read.xlsx('https://www.ahrq.gov/sites/default/files/wysiwyg/sdohchallenge/data/SDOH_ZCTA_2015.xlsx');
+ahrqCodebook2015 <- read.xlsx('https://www.ahrq.gov/sites/default/files/wysiwyg/sdohchallenge/data/sdoh_codebook_final.xlsx', sheet ='ZCTA_2015');
+sdi <- read.xlsx('https://www.graham-center.org/content/dam/rgc/documents/maps-data-tools/sdi/ACS2015_zctaallvars.xlsx');
+library(readr);
+outcomes <- read_csv('data/OutcomeData.csv');
+```
+
+# 2. Merge and get into the same format
+```{r}
+colnames(census2015)
+colnames(ahrqCodebook2015)
+colnames(sdi)
+colnames(outcomes)
+
+intersect(colnames(census2015), colnames(ahrqCodebook2015))
+intersect(colnames(census2015), colnames(sdi))
+intersect(colnames(census2015), colnames(outcomes))
+
+intersect(colnames(ahrqCodebook2015), colnames(sdi))
+intersect(colnames(ahrqCodebook2015), colnames(outcomes))
+
+intersect( colnames(sdi), colnames(outcomes))
+
+df <- merge(outcomes, census2015, by = intersect(colnames(census2015), colnames(outcomes)), all.x = TRUE)
+dat0 <- merge(df, sdi, by.x = "ZCTA", by.y = "zcta", all.x = TRUE)
+```
+
+# 3. Prepare analytical data set
+```{r}
+dat0$sample <- sample(c("train", "test"), nrow(dat0), rep=T, prob = c(1/2, 1/2)) 
+dtrain <- subset(dat0, sample == "train")
+dtest <- subset(dat0, sample=="test")
+
+```
+
