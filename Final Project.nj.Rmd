@@ -40,6 +40,5 @@ dat0 <- merge(df, sdi, by.x = "ZCTA", by.y = "zcta", all.x = TRUE)
 dat0$sample <- sample(c("train", "test"), nrow(dat0), rep=T, prob = c(1/2, 1/2)) 
 dtrain <- subset(dat0, sample == "train")
 dtest <- subset(dat0, sample=="test")
-
 ```
 
