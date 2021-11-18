@@ -4,8 +4,9 @@ author: "Chapapas, Holly, Munoz, Edgar, Nie, Jia & Catano, Omar Gabriel"
 date: "2021-11-17"
 abstract:  "[Provide a summary of objectives, study design, sample size, predictors, outcome, statistical analysis, results, and conclusions.]"
 output:
- word_document: default
- html_document: default
+  word_document:
+    reference_docx: templates/template.docx
+  html_document: default
 editor_options: 
   chunk_output_type: console
 ---
