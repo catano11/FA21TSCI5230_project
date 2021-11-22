@@ -8,6 +8,7 @@ output:
  html_document: default
 editor_options: 
   chunk_output_type: console
+bibliography: citations.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Data
 
-As proof of principle, we used AHRQ-curated census data from the years 2015 and 2016, which we will extend to all available years during the proposed study. Using zipcode tabulation areas (ZCTAs) we crosswalked the AHRQ data to the Social Deprivation Index **[reference]** and to our own calculations of percentages of hospital discharges that did not result in readmissions.
+As proof of principle, we used AHRQ-curated census data from the years 2015 and 2016, which we will extend to all available years during the proposed study. Using zipcode tabulation areas (ZCTAs) we crosswalked the AHRQ data to the Social Deprivation Index [@Butler2012] and to our own calculations of percentages of hospital discharges that did not result in readmissions.
 
 ## Analysis
 
