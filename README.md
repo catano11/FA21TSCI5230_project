@@ -1,5 +1,5 @@
-# FA21TSCI5230_project
-### Group project for TSCI5230
+# Group project for TSCI5230
+
 
 
 **Good news**: You have been invited to be part of Prof. Elemental's grant-writing
