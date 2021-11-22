@@ -4,6 +4,7 @@
 # Session Data files
 *.RData
 *.docx
+!template.docx
 *.rdata
 *.log
 *.tex
