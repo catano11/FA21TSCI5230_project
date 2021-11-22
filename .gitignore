@@ -4,7 +4,11 @@
 # Session Data files
 *.RData
 *.docx
+<<<<<<< HEAD
 !template.docx # Except for template.docx
+=======
+!template.docx
+>>>>>>> da4b841f9cba4bb08cdb02043cf6cd52c6b0c9ba
 *.rdata
 *.log
 *.tex
