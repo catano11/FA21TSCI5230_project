@@ -1,6 +1,7 @@
 ## 4. Download the data set programatically --------------------------------------------------------------------------------------------------------
 library(openxlsx);
 census2015 <- read.xlsx('https://www.ahrq.gov/sites/default/files/wysiwyg/sdohchallenge/data/SDOH_ZCTA_2015.xlsx');
+# download 2016
 ahrqCodebook2015 <- read.xlsx('https://www.ahrq.gov/sites/default/files/wysiwyg/sdohchallenge/data/sdoh_codebook_final.xlsx', sheet ='ZCTA_2015');
 sdi <- read.xlsx('https://www.graham-center.org/content/dam/rgc/documents/maps-data-tools/sdi/ACS2015_zctaallvars.xlsx');
 library(readr);
@@ -21,7 +22,11 @@ colnames(ahrqCodebook2015) <- toupper(colnames(ahrqCodebook2015))
 colnames(sdi);
 toupper(colnames(sdi))
 colnames(sdi) <- toupper(colnames(sdi))
-
+colnames(outcomes);
+toupper(colnames(outcomes))
+colnames(outcomes) <- toupper(colnames(outcomes))
+sdi$ZCTA <- as.character(sdi$ZCTA)
+  
 # finding the overlapped colnames
 intersect(colnames(census2015), colnames(ahrqCodebook2015))
 intersect(colnames(census2015), colnames(sdi)) # 1
@@ -33,9 +38,10 @@ intersect( colnames(sdi), colnames(outcomes)) # 1
 # merge data
 # df <- merge(outcomes, census2015, by = intersect(colnames(census2015), colnames(outcomes)), all.x = TRUE) # intersect not good for this step
 # dat0 <- merge(df, sdi, by = intersect(colnames(df), colnames(sdi)), all.x = TRUE)# intersect not good for this step
-df <- merge(outcomes, census2015, by = "ZCTA", all.x = TRUE)
-dat0 <- merge(df, sdi, by = "ZCTA", all.x = TRUE)
-
+# df <- merge(outcomes, census2015, by = c("ZCTA", "YEAR"), all.x = TRUE)
+# dat0 <- merge(df, sdi, by = "ZCTA", all.x = TRUE)
+df <- dplyr::left_join(x=outcomes, y=census2015, by = c("ZCTA" = "ZCTA",  "YEAR" ="YEAR"))
+dat0 <- dplyr::left_join(x=df, y=sdi, by = c("ZCTA" = "ZCTA"))
 
 ## 6. Prepare analytical data set--------------------------------------------------------------------------------------------------------
 set.seed(10)
