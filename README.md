@@ -1,6 +1,7 @@
 # Group project for TSCI5230
 
 
+
 **Good news**: You have been invited to be part of Prof. Elemental's grant-writing
 team. He sent each of you a COP comitting to 75% coverage of your salary, which 
 will impress the promotion & tenure committee and make your department chair 
