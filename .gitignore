@@ -3,7 +3,7 @@
 .Rapp.history
 # Session Data files
 *.RData
-*.docx
+# *.docx
 *.rdata
 *.log
 *.tex
