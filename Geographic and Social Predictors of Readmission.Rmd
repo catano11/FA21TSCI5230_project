@@ -25,7 +25,7 @@ As proof of principle, we used AHRQ-curated census data from the years 2015 and 
 
 ## Analysis
 
-Before viewing the merged dataset in any way, we randomly assigned each ZCTA to a training **(N=???)** or testing **(N=???)** subset (each with 50% likelihood). Variable selection and all other decisions about data analysis were made using only the training subset, having blinded ourselves to the testing subset until the entire analysis pipeline was finalized.
+Before viewing the merged dataset in any way, we randomly assigned each ZCTA to a training **(N=???)** or testing **(N=???)** subset (each with 50% likelihood). Variable selection and all other decisions about data analysis were made using only the training subset, having blinded ourselves to the testing subset until the entire analysis pipeline was finalized.[@Boldanova2021]
 Our previous research suggests that the following socieconomic variables are possible predictors of readmission (the variable named NoReadmission  ) : ACS_PER_CAPITA_INCOME, ACS_PCT_POSTHS_ED, ACS_MEDIAN_HOME_VALUE, ACS_PCT_MEDICAID_ANY, ACS_PCT_DISABLE, and sdi_score. However, we had no reason to believe these are the only relevant variables nor that their effect is additive (i.e. we cannot exclude the possibility that the effect of a variable might increase or decrease depending on the values of other variables).
 We used bi-directional stepwise selection with the Bayes Information Criterion (BIC) to select the terms for a regression model. The models considered ranges from no predictors to all available variables with all possible two-way interactions. The model selected through this process was as follows:
 
@@ -47,3 +47,10 @@ We then made predictions on out-of-sample data (i.e. the training set) without r
 '[plot of predicted vs observed training values goes here]'
 
 ```
+
+\newpage
+
+## References
+
+
+
