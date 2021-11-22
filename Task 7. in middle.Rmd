@@ -1,0 +1,38 @@
+---
+title: "Untitled"
+author: "jia nie"
+date: "11/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+
+7. Fit a regression model
+7.a. Null model, no predictors 
+```{r}
+# Stepwise Regression Essentials in R
+library(tidyverse)
+library(caret)
+# install.packages("leaps")
+library(leaps)
+
+# Bayes information criterion (BIC)
+
+lm1 <- lm(NoReadmission ~ 1 , data = dtrain)# null model
+summary(lm1)
+lmf <- lm(NoReadmission ~ . , data = dtrain)# full model
+M1.step <- step(lm1, 
+                scope = list(lower = NoReadmission ~ 1, 
+                             upper = NoReadmission ~ .),
+               direction = "both", k = log(nrow(dtrain)))
+
+AIC(lm1)
+BIC(lm1)
+```
+
