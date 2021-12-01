@@ -9,7 +9,7 @@ ahrqCodebook2015_2016 <- rbind(ahrqCodebook2015, ahrqCodebook2016)
 sdi <- read.xlsx('https://www.graham-center.org/content/dam/rgc/documents/maps-data-tools/sdi/ACS2015_zctaallvars.xlsx');
 library(readr);
 outcomes <- read_csv('data/OutcomeData.csv');
-outcomes2015_2016 <- outcomes[which(outcomes$YEAR %in% c("2015", "2016")), ]
+outcomes2015_2016 <- outcomes[which(outcomes$Year %in% c("2015", "2016")), ]
 
 ## 5. Merge and get into the same format--------------------------------------------------------------------------------------------------------
 # check colnames
