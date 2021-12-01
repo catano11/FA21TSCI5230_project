@@ -60,5 +60,17 @@ saveRDS(dat0, file = "data/dat0.Rds")
 saveRDS(dtrain, file = "data/dtrain.Rds")
 saveRDS(dtest, file = "data/dtest.Rds")
 
+# create selection dataframe for columns if there is NA
+# dat0 <- readRDS(file = "data/dat0.Rds")
+selection <- sapply(dat0, function(xx) {c("Missing.numbers" = sum(is.na(xx)), 
+                             "Missing.percentage" = sum(is.na(xx))/nrow(dat0),
+                             "Is.numberic" = is.numeric(xx),  
+                             "Median.values" = ifelse( is.numeric(xx), median(xx, na.rm = TRUE), 999999999) ) }) %>% 
+  t %>% as.data.frame() %>% add_rownames %>% View
+
+selection["rownames", ]
+subset(selection, )
+dat1 <- dat0[, ]
+
 ## Run the whole scripts-------------------------------------------------------------------------------
 # source("C:/Users/niej/Desktop/2021-08-23 Certificate in Biomedical Data Science/TSCI 5230 Analytical Programming for Biomedical Data Science/FA21TSCI5230_project/data.R", echo=TRUE)
