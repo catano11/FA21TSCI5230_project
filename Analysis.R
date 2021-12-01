@@ -1,20 +1,21 @@
 #' ## Model  Summary
-
+if(!file.exists('data/dtrain.Rds')){source('data.R',local=TRUE,verbose=FALSE)};
+ dtrain <- readRDS('data/dtrain.Rds');
 #' Fitting data to appropriate statistic linear model with our predictors
-# fit <- lm(_______ ~ ACS_PER_CAPITA_INCOME + ACS_PCT_POSTHS_ED + ACS_MEDIAN_HOME_VALUE + ACS_PCT_MEDICAID_ANY + ACS_PCT_DISABLE + sdi_score, data = ________);
-# summary(fit);
+fit <- lm(NOREADMISSION ~ ACS_PER_CAPITA_INCOME + ACS_PCT_POSTHS_ED + ACS_MEDIAN_HOME_VALUE + ACS_PCT_MEDICAID_ANY + ACS_PCT_DISABLE + SDI_SCORE, data = dtrain);
+summary(fit);
 #' Provide a clean version of the summary - both produce the same results
-# summary(fit) %>% tidy;
-# fit %>% tidy;
+summary(fit) %>% tidy;
+fit %>% tidy;
 #' Show a quick look at all of the summary statistics
-# glance(fit);
+glance(fit);
 
 #' Create a 'null' model that does not specify predictors
-# fit0 <- lm(________ ~ 1, data = ________);
-# summary(fit0);
-# summary(fit0) %>% tidy;
-# fit0 %>% tidy;
-# glance(fit0);
+fit0 <- lm(NOREADMISSION ~ 1, data = dtrain);
+summary(fit0);
+summary(fit0) %>% tidy;
+fit0 %>% tidy;
+glance(fit0);
 
 # When using lm repeatedly you can use '.~' to keep the original outcome and '~.' to keep the original predictors
 #'
