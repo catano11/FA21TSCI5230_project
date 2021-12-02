@@ -46,15 +46,19 @@ intersect( colnames(sdi), colnames(outcomes2015_2016)); # 1
 df <- dplyr::left_join(x=outcomes2015_2016, y=census2015_2016, by = c("ZCTA" = "ZCTA",  "YEAR" ="YEAR"))
 dat0 <- dplyr::left_join(x=df, y=sdi, by = c("ZCTA" = "ZCTA"))
 
-# create selection dataframe for columns if there is NA
+# create selection dataframe for columns to avoid NA
 selection <- sapply(dat0, function(xx) {c("Missing.numbers" = sum(is.na(xx)), 
                              "Missing.percentage" = sum(is.na(xx))/nrow(dat0),
                              "Is.numeric" = is.numeric(xx),  
                              "Median.values" = ifelse( is.numeric(xx), median(xx, na.rm = TRUE), 999999999) ) }) %>% 
   t %>% as.data.frame() %>% add_rownames 
 hist(selection$Missing.percentage, breaks = 200)
-select.names <- subset(selection, Missing.percentage < 0.1 & Is.numeric == 1)$rowname %>% setdiff(c("YEAR"))
-dat1 <- dat0[, select.names]
+select.names <- subset(selection, Missing.percentage < 0.1 & Is.numeric == 1)$rowname # set 10% as the cutting line to select columns
+character.names <- subset(selection, Is.numeric == 0)$rowname # c("ZCTA", "REGION", "STATE")
+dat1 <- dat0[, c(character.names, select.names)] 
+sum(is.na(dat1))
+dat1 <- sapply(dat1, function(xx) {ifelse(is.na(xx), median(xx, na.rm = TRUE), xx)}) %>% as.data.frame() # replace NA with median value
+sum(is.na(dat1))
 
 
 ## 6. Prepare analytical data set--------------------------------------------------------------------------------------------------------
@@ -70,7 +74,6 @@ nrow(dtest)
 saveRDS(dat0, file = "data/dat0.Rds")
 saveRDS(dtrain, file = "data/dtrain.Rds")
 saveRDS(dtest, file = "data/dtest.Rds")
-
 
 
 ## Run the whole scripts-------------------------------------------------------------------------------
