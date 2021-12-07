@@ -7,8 +7,8 @@ for(package in packageList){
     install.packages(package);require(package,character.only = TRUE);}
 };
 
-if(!file.exists('data/dtrain.Rds')){source('data.R',local=TRUE,verbose=FALSE)};
- dtrain <- readRDS('data/dtrain.Rds');
+if(!file.exists('data/dtrain.Rds')){source('Analysis.R',local=TRUE,verbose=FALSE)};
+ dtrain <- load('data/dtrain.Rds');
  
 #' Fitting data to appropriate statistic linear model with our predictors
 fit <- lm(NOREADMISSION ~ ACS_PER_CAPITA_INCOME + ACS_PCT_POSTHS_ED + ACS_MEDIAN_HOME_VALUE + ACS_PCT_MEDICAID_ANY + ACS_PCT_DISABLE + SDI_SCORE, data = dtrain);
@@ -52,4 +52,5 @@ fitBIC <- step(fit, scope = list(lower = fit0, upper = fit1), scale = 0, directi
 #Save enviroment of the script for use in R markdown file
 save.image(file='data/Analysis.Rdata')
 #load('data/Analysis.Rdata')
-
+saveRDS(fit, file="data/analysis_fit.RDS")
+saveRDS(fitBIC, file="data/analysis_fitBIC.RDS")

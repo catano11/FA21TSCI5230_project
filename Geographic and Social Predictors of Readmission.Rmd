@@ -44,6 +44,10 @@ We used bi-directional stepwise selection with the Bayes Information Criterion (
 ```{r regression model, echo=FALSE}
 #' echo=FALSE will prevent the printing of the R code that generated the plot
 #' ## Model  Summary
+load('data/Analysis.Rdata')
+readRDS(Analysis.R)
+
+
 
 #' Fitting data to appropriate statistic linear model with our predictors
 # fit <- lm(_______ ~ ACS_PER_CAPITA_INCOME + ACS_PCT_POSTHS_ED + ACS_MEDIAN_HOME_VALUE + ACS_PCT_MEDICAID_ANY + ACS_PCT_DISABLE + sdi_score, data = ________);

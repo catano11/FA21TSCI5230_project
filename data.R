@@ -60,5 +60,6 @@ saveRDS(dat0, file = "data/dat0.Rds")
 saveRDS(dtrain, file = "data/dtrain.Rds")
 saveRDS(dtest, file = "data/dtest.Rds")
 
+
 ## Run the whole scripts-------------------------------------------------------------------------------
 # source("C:/Users/niej/Desktop/2021-08-23 Certificate in Biomedical Data Science/TSCI 5230 Analytical Programming for Biomedical Data Science/FA21TSCI5230_project/data.R", echo=TRUE)
