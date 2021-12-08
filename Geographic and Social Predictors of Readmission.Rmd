@@ -98,17 +98,32 @@ fitBIC<- readRDS(file="data/analysis_fitBIC.RDS")
 
 We then made predictions on out-of-sample data (i.e. the training set) without re-fitting or altering the original model and got the following result:
 
-```{r training model, echo=FALSE}
+```{r training_model, echo=FALSE}
 #' echo=FALSE will prevent the printing of the R code that generated the plot
 plot(dtest$NOREADMISSION ~ predict(fit, dtest))
 
 fitRMSE <- ModelMetrics::rmse(predict(fit, dtest), dtest$NOREADMISSION)
 table(is.na(predict(fit)))
 
-'[plot of predicted vs observed training values goes here]'
-
 ```
 The root mean square error is `r fitRMSE`
+
+Starting model results:
+```{r summary_of_fit, echo=FALSE}
+## Edgar
+
+```
+
+BIC model predicted vs observed:
+```{r observe_vs_pred_fit_bic, echo=FALSE}
+## Holly
+
+```
+BIC model results:
+```{r summary_of_fit_bic, echo=FALSE}
+## Jia
+```
+
 \newpage
 
 # References
