@@ -1,5 +1,6 @@
 ## 4. Download the data set programatically --------------------------------------------------------------------------------------------------------
 library(openxlsx);
+library(dplyr);
 census2015 <- read.xlsx('https://www.ahrq.gov/sites/default/files/wysiwyg/sdohchallenge/data/SDOH_ZCTA_2015.xlsx');
 census2016 <- read.xlsx('https://www.ahrq.gov/sites/default/files/wysiwyg/sdohchallenge/data/SDOH_ZCTA_2016.xlsx');
 census2015_2016 <- rbind(census2015, census2016)
