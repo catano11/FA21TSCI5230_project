@@ -16,11 +16,15 @@ csl: apa-6th-edition.csl
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-packageList <- c("knitr","Publish","ggplot2","rio","GGally","dplyr","pander","readr","synthpop", "rmarkdown", "readxl", "tibble", "broom")
+packageList <- c("knitr","Publish","ggplot2","rio","GGally","dplyr","pander","readr","synthpop", "rmarkdown", "readxl", "tibble", "broom", "scales", "ModelMetrics")
 for(package in packageList){
   if(!require(package,character.only = TRUE)){
     install.packages(package);require(package,character.only = TRUE);}
 }
+
+load('data/Analysis.Rdata');
+dtest <- readRDS('data/dtest.Rds');
+cm <- comma_format()
 
 # Use the following in the console to pull from the main repository:
 # git remote add upstream https://github.com/bokov/FA21TSCI5230_project
@@ -35,7 +39,7 @@ As proof of principle, we used AHRQ-curated census data from the years 2015 and 
 
 ## Analysis
 
-Before viewing the merged dataset in any way, we randomly assigned each ZCTA to a training **(N=???)** or testing **(N=???)** subset (each with 50% likelihood). Variable selection and all other decisions about data analysis were made using only the training subset, having blinded ourselves to the testing subset until the entire analysis pipeline was finalized [@Boldanova2021].
+Before viewing the merged dataset in any way, we randomly assigned each ZCTA to a training (N=`r  cm(nrow(dtrain))`) or testing (N= `r cm(nrow(dtest))`) subset (each with 50% likelihood). Variable selection and all other decisions about data analysis were made using only the training subset, having blinded ourselves to the testing subset until the entire analysis pipeline was finalized [@Boldanova2021].
 
 Our previous research suggests that the following socieconomic variables are possible predictors of readmission (the variable named NoReadmission  ) : ACS_PER_CAPITA_INCOME, ACS_PCT_POSTHS_ED, ACS_MEDIAN_HOME_VALUE, ACS_PCT_MEDICAID_ANY, ACS_PCT_DISABLE, and sdi_score. However, we had no reason to believe these are the only relevant variables nor that their effect is additive (i.e. we cannot exclude the possibility that the effect of a variable might increase or decrease depending on the values of other variables).
 We used bi-directional stepwise selection with the Bayes Information Criterion (BIC) to select the terms for a regression model. The models considered ranges from no predictors to all available variables with all possible two-way interactions. The model selected through this process was as follows:
@@ -44,7 +48,7 @@ We used bi-directional stepwise selection with the Bayes Information Criterion (
 ```{r regression model, echo=FALSE}
 #' echo=FALSE will prevent the printing of the R code that generated the plot
 #' ## Model  Summary
-load('data/Analysis.Rdata')
+
 
 
 fit<- readRDS(file="data/analysis_fit.RDS")
@@ -96,10 +100,15 @@ We then made predictions on out-of-sample data (i.e. the training set) without r
 
 ```{r training model, echo=FALSE}
 #' echo=FALSE will prevent the printing of the R code that generated the plot
+plot(dtest$NOREADMISSION ~ predict(fit, dtest))
+
+fitRMSE <- ModelMetrics::rmse(predict(fit, dtest), dtest$NOREADMISSION)
+table(is.na(predict(fit)))
+
 '[plot of predicted vs observed training values goes here]'
 
 ```
-
+The root mean square error is `r fitRMSE`
 \newpage
 
 # References
