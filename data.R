@@ -65,7 +65,7 @@ sum(is.na(dat1))
 ## 6. Prepare analytical data set--------------------------------------------------------------------------------------------------------
 set.seed(10)
 table(sample(c("train", "test"), nrow(dat1), rep=T, prob = c(1/2, 1/2)) )/nrow(dat1)
-dat1$sample <- sample(c("train", "test"), nrow(dat1), rep=T, prob = c(1/2, 1/2)) 
+dat1$sample <- sample(c("train", "test", "othere"), nrow(dat1), rep=T, prob = c(1, 1, 8)) 
 dtrain <- subset(dat1, sample == "train")
 dtest <- subset(dat1, sample=="test")
 nrow(dtrain)
