@@ -52,4 +52,5 @@ fitBIC <- step(fit, scope = list(lower = fit0, upper = fit1), scale = 0, directi
 #Save enviroment of the script for use in R markdown file
 save.image(file='data/Analysis.Rdata')
 #load('data/Analysis.Rdata')
-
+saveRDS(fit, file="data/analysis_fit.RDS")
+saveRDS(fitBIC, file="data/analysis_fitBIC.RDS")
