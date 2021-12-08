@@ -4,9 +4,9 @@ author: "Chapapas, Holly, Munoz, Edgar, Nie, Jia & Catano, Omar Gabriel"
 date: "2021-11-17"
 abstract:  "[Provide a summary of objectives, study design, sample size, predictors, outcome, statistical analysis, results, and conclusions.]"
 output:
+  html_document: default
   word_document:
     reference_docx: templates/template.docx
-  html_document: default
 editor_options: 
   chunk_output_type: console
 bibliography: citations.bib
@@ -45,9 +45,10 @@ We used bi-directional stepwise selection with the Bayes Information Criterion (
 #' echo=FALSE will prevent the printing of the R code that generated the plot
 #' ## Model  Summary
 load('data/Analysis.Rdata')
-readRDS(Analysis.R)
 
 
+fit<- readRDS(file="data/analysis_fit.RDS")
+fitBIC<- readRDS(file="data/analysis_fitBIC.RDS")
 
 #' Fitting data to appropriate statistic linear model with our predictors
 # fit <- lm(_______ ~ ACS_PER_CAPITA_INCOME + ACS_PCT_POSTHS_ED + ACS_MEDIAN_HOME_VALUE + ACS_PCT_MEDICAID_ANY + ACS_PCT_DISABLE + sdi_score, data = ________);
