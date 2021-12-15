@@ -30,7 +30,7 @@ colnames(outcomes2015_2016);
 toupper(colnames(outcomes2015_2016));
 colnames(outcomes2015_2016) <- toupper(colnames(outcomes2015_2016));
 sdi$ZCTA <- as.character(sdi$ZCTA);
-  
+
 # finding the overlapped colnames
 intersect(colnames(census2015_2016), colnames(ahrqCodebook2015_2016));
 intersect(colnames(census2015_2016), colnames(sdi)); # 1
@@ -48,24 +48,25 @@ df <- dplyr::left_join(x=outcomes2015_2016, y=census2015_2016, by = c("ZCTA" = "
 dat0 <- dplyr::left_join(x=df, y=sdi, by = c("ZCTA" = "ZCTA"))
 
 # create selection dataframe for columns to avoid NA
-selection <- sapply(dat0, function(xx) {c("Missing.numbers" = sum(is.na(xx)), 
+selection <- sapply(dat0, function(xx) {c("Missing.numbers" = sum(is.na(xx)),
                              "Missing.percentage" = sum(is.na(xx))/nrow(dat0),
-                             "Is.numeric" = is.numeric(xx),  
-                             "Median.values" = ifelse( is.numeric(xx), median(xx, na.rm = TRUE), 999999999) ) }) %>% 
-  t %>% as.data.frame() %>% add_rownames 
+                             "Is.numeric" = is.numeric(xx),
+                             "Median.values" = ifelse( is.numeric(xx), median(xx, na.rm = TRUE), 999999999) ) }) %>%
+  t %>% as.data.frame() %>% add_rownames
 hist(selection$Missing.percentage, breaks = 200)
 select.names <- subset(selection, Missing.percentage < 0.1 & Is.numeric == 1)$rowname # set 10% as the cutting line to select columns
 character.names <- subset(selection, Is.numeric == 0)$rowname # c("ZCTA", "REGION", "STATE")
-dat1 <- dat0[, c(character.names, select.names)] 
+dat1 <- dat0[, c(character.names, select.names)]
 sum(is.na(dat1))
-dat1 <- sapply(dat1, function(xx) {ifelse(is.na(xx), median(xx, na.rm = TRUE), xx)}) %>% as.data.frame() # replace NA with median value
+#dat1 <- sapply(dat1, function(xx) {ifelse(is.na(xx), median(xx, na.rm = TRUE), xx)}) %>% as.data.frame() # replace NA with median value
+dat1 <- mutate(dat1,across(where(is.numeric),~coalesce(.x,median(.x,na.rm=T))));
 sum(is.na(dat1))
 
 
 ## 6. Prepare analytical data set--------------------------------------------------------------------------------------------------------
 set.seed(10)
 table(sample(c("train", "test"), nrow(dat1), rep=T, prob = c(1/2, 1/2)) )/nrow(dat1)
-dat1$sample <- sample(c("train", "test"), nrow(dat1), rep=T, prob = c(1/2, 1/2)) 
+dat1$sample <- sample(c("train", "test", "othere"), nrow(dat1), rep=T, prob = c(1, 1, 8))
 dtrain <- subset(dat1, sample == "train")
 dtest <- subset(dat1, sample=="test")
 nrow(dtrain)
